@@ -1,9 +1,9 @@
 # Test_task
 Для запуска проекта требуются: 
-  PHP 7.2.5 и выше (Например, сборка WAMP http://www.wampserver.com/ru/#wampserver-64-bits-php-5-6-25-php-7)
-  Composer 1.9.2 и выше (https://getcomposer.org/download/)
-  Symfony 5.0.3 и выше (https://symfony.com/download)
-  PostgreSql 12 версии (https://www.postgresql.org/download/)
+1) PHP 7.2.5 и выше (Например, сборка WAMP http://www.wampserver.com/ru/#wampserver-64-bits-php-5-6-25-php-7)
+2) Composer 1.9.2 и выше (https://getcomposer.org/download/)
+3) Symfony 5.0.3 и выше (https://symfony.com/download)
+4) PostgreSql 12 версии (https://www.postgresql.org/download/)
 
 Пример установки:
 1) Устанавливаем PostgreSql.
@@ -18,3 +18,8 @@
 10) Запускаем pgAdmin, восстанавливаем базу из бэкапа в папке bd_backup репозитория.
 11) Запускаем командную строку из директории репозитория
 12) Выполняем команду Symfony server:start
+13) В адресной строке браузера вводим http://localhost:8000/
+
+Пресозданные пользователи 
+admin : 32167
+ast : 123
