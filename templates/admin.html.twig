@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Administration</title>
+        <style type="text/css">
+       .border { 
+        padding: 5px;
+        margin-bottom: 10px;
+        border: solid 1px black; 
+       }
+  </style> 
+    </head>
+    <body>
+        <h1>Список пользователей</h1>
+        {% for user in users %}
+        <div  class="border">
+            <form action='/administration/update_user_name' method="post">
+                <p><b>Username:</b><br>
+                <input type="text" name="userName" size="40" value="{{user.getUserName()}}">
+                <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+                <input type="hidden" name="adminId" value="{{ adminId }}">
+                <p><input type="submit" value="update username"></p>
+            </form>
+                <p><b>Login:</b><br>
+                <input type="text" size="40" value="{{user.getLogin()}}"></p>
+                <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+                <input type="hidden" name="adminId" value="{{ adminId }}">
+            <form action="/administration/change_password" method="post">
+                <p><b>Password:</b><br>
+                <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+                <input type="hidden" name="adminId" value="{{ adminId }}">
+                <input type="text" name="pswd" size="40" ></p>
+                <p><input type="submit" value="change password"></p>
+            </form>
+            <form action="/administration/delete_user" method="post">
+                <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+                <input type="hidden" name="adminId" value="{{ adminId }}">
+                <p><input type="submit" value="delete user"></p>
+            </form>
+        </div>
+        {% endfor %}
+
+        <details>
+            <summary>Новый пользователь</summary>
+            <div class="border">
+                <form name="new_post" action="/administration/new_user" method="post">
+                    <p><b>Username:</b><br>
+                    <input type="text" name="userName" size="40">
+                    <p><b>LoginName:</b></p>
+                    <input type="text" name="login" size="40">
+                    <p><b>Password:</b><br>
+                    <input type="text" name="pswd" size="40" ></p>
+                    <input type="hidden" name="adminId" value="{{ adminId }}">
+                    <p><input type="submit" value="add new user">
+                </form>
+            </div>
+        </details>
+    </body>
+</html>

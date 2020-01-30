@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profile</title>
+        <style type="text/css">
+            .border {
+                padding: 5px;
+                margin-bottom: 10px;
+                border: solid 1px black;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Меню пользователя</h1>
+        <form action="/profile/update_name" method="post">
+            <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+            <p><b>Username:</b><br>
+            <p><input type="text" name="userName" size="40" value="{{ user.getUserName() }}"></p>
+            <p><input type="submit" value="update"></p>
+        </form>
+        <form action="/profile/update_password" method="post">
+            <p><b>Password:</b><br>
+            <p><input type="password" size="40"></p>
+            <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+            <p><input type="submit" value="update"></p>
+        </form>
+        <form action="/profile/update_photo" method="post" enctype="multipart/form-data">
+            <img src="{{ photoUrl }}" alt="Image"/>
+            <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+            <p><b>Photo:</b><br>
+            <p><input type="file" name="photo"></p>
+            <p><input type="submit" value="update"></p>
+        </form>
+
+        {% for post in posts %}
+            {% if post is empty %}
+            {% else %}
+                <div class="border">
+                    <form action="/profile/update_post" method="post">
+                        <p><b>Post:</b><br>
+                        <p>Date:{{ post.getDate() }}</p>
+                        <p><input type="text" name="postText" value="{{ post.getText() }}"></p>
+                        <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+                        <input type="hidden" name="postId" value="{{ post.getPostId() }}">
+                        <p><input type="submit" value="update"></p>
+                    </form>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <details>
+            <summary>Новый пост</summary>
+            <div class="border">
+                <form name="new_post" action="/profile/add_post" method="put">
+                    <p><b>Text</b></p>
+                    <p><input type="text" name="postText"></p>
+                    <input type="hidden" name="userId" value="{{ user.getUserId() }}">
+                    <p><input type="submit" value="new post">
+                </form>
+            </div>
+        </details>
+    </body>
+</html>
