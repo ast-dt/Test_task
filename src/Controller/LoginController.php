@@ -2,33 +2,75 @@
 
 namespace App\Controller;
 
-use PhpParser\Node\Expr\Cast\Bool_;
+use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 
 class LoginController extends AbstractController
 {
-    public function route()
+    /**
+     * @Route("/")
+     */
+    public function showStartPage()
     {
-        $bdController = new BdController();
-        $dbConnection =  $bdController->getDbConnection();
-        $query = "SELECT user_id, role_name FROM tst.get_user_info('$_GET[loginName]','$_GET[pswd]')";
-        $result = pg_query($dbConnection, $query) or die('Ошибка запроса: ' . pg_last_error());
-        if (!$result) {
-            return $signUpErrorPage = $this->redirectToRoute('bdError');
+        return $this->render('start.html.twig',
+            ['message' => null]);
+    }
+
+    /**
+     * @Route("/user_not_found")
+     */
+    public function showUserNotFound()
+    {
+        return $this->render('start.html.twig',
+            ['message' => "User not found"]);
+    }
+
+    /**
+     * @Route("/user_blocked")
+     */
+    public function showUserBlocked()
+    {
+        return $this->render('start.html.twig',
+            ['message' => "User blocked"]);
+    }
+
+    /**
+     * @Route("/login",
+     *      defaults={"loginName":"placeholder",
+     *                "pswd":"placeholder"}
+     * )
+     */
+    public function login(Request $request)
+    {
+        $login = $request->request->get('loginName');
+        $password = $request->request->get('pswd');
+        $user = $this->getDoctrine()
+            ->getRepository(Users::class)
+            ->findUserByLoginAndPassword($login, $password);
+
+        if (!$user) {
+            //return $this->redirectToRoute('userNotFound');
+            return $this->render('start.html.twig',
+                ['message' => $login]);
         }
-        if ($row = pg_fetch_row($result)) {
-            if ($row[1] == 'admin') {
-                return $this->redirectToRoute('administration', ['adminId' => $row[0]]);
+
+        if ($user instanceof Users) {
+            $isAdmin = $user->getRole()->getIsAdmin();
+            if ($isAdmin) {
+                return $this->redirectToRoute('administration', [
+                    'adminId' => $user->getUserId()]);
             } else {
-                return $this->redirectToRoute('profile', ['userId' => $row[0]]);
+                $active = $user->getState()->getStateId();
+                if ($active == 0) {
+                    return $this->redirectToRoute('profile', [
+                        'userId' => $user->getUserId()]);
+                } else {
+                    return $this->redirectToRoute('userBlocked');
+                }
             }
-        } else {
-            return $this->redirectToRoute('signError');
         }
     }
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная страница</title>
+</head>
+<body>
+{% if message is not empty %}
+    <p><b>{{ message }}</b></p>
+{% endif %}
+<form name="login" action="/login" method="POST">
+    <p><b>Login:</b><br>
+        <input type="text" name="loginName" size="40"></p>
+    <p><b>Password:</b><br>
+        <input type="password" name="pswd" size="40"></p>
+    <p><input type="submit" value="log in"</p>
+</form>
+</body>
+</html>

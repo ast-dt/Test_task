@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Roles" table="roles">
+    <id name="roleId" type="smallint" column="role_id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="roles_role_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="roleName" type="string" column="role_name" length="10" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="isAdmin" type="boolean" column="is_admin" nullable="false"/>
+  </entity>
+</doctrine-mapping>

@@ -3,67 +3,46 @@
 #    controller: App\Controller\DefaultController::index
 homepage:
     path: /
-    controller: App\Controller\StartPage::showStartPage
+
 login:
     path: /login
-    controller: App\Controller\LoginController::route
 
 administration:
     path: /administration/{adminId}
-    controller: App\Controller\AdministrationController::showAdminPage
-    requirements:
-        adminId: '\d+'
 
 profile:
     path: /profile/{userId}
-    controller: App\Controller\ProfileController::showProfile
-    requirements:
-        userId: '\d+'
 
-signError:
-    path: /sign_up_error
-    controller: App\Controller\StartPage::showErrorPage
-
-bdError:
-    path: /bd_error
-    controller: App\Controller\StartPage::showBdErrorPage
+userBlocked:
+    path: /user_blocked
 
 userNotFound:
-    path: /userNotFound
-    controller: App\Controller\StartPage::showUserNotFound
+    path: /user_not_found
 
 addPost:
-    path: /profile/add_post
-    controller: App\Controller\ProfileController::addNewPost
+    path: /profile/{userId}/add_post
 
 updatePost:
-    path: /profile/update_post
-    controller: App\Controller\ProfileController::updatePost
+    path: /profile/{userId}/update_post
 
 updateName:
-    path: /profile/update_name
-    controller: App\Controller\ProfileController::updateName
+    path: /profile/{userId}/update_name
 
 updatePassword:
-    path: /profile/update_password
-    controller: App\Controller\ProfileController::updatePassword
+    path: /profile/{userId}/update_password
 
 updatePhoto:
-    path: /profile/update_photo
-    controller: App\Controller\ProfileController::updatePhoto
+    path: /profile/{userId}/update_photo
 
 updateUserName:
-    path: /administration/update_user_name
-    controller: App\Controller\AdministrationController::updateUserName
+    path: /administration/{adminId}/change_user_name
 
 updateUserPassword:
-    path: /administration/change_password
-    controller: App\Controller\AdministrationController::changePassword
+    path: /administration/{adminId}/change_password
 
 addNewUser:
-    path: /administration/new_user
-    controller: App\Controller\AdministrationController::addNewUser
+    path: /administration/{adminId}/new_user
 
 deleteUser:
-    path: /administration/delete_user
-    controller: App\Controller\AdministrationController::removeUser
+    path: /administration/{adminId}/delete_user
+
